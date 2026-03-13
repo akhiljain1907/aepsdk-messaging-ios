@@ -105,7 +105,7 @@ struct ParsedPropositions {
                     propositionsToCache.add(proposition, forKey: surface)
                 // - handle container-item schemas for inbox
                 //   a. container-item schemas are cached in memory only
-                case .containerItem:
+                case .inbox:
                     inboxPropositionsToCache.add(proposition, forKey: surface)
                 case .unknown:
                     continue

@@ -45,11 +45,6 @@ struct DefaultEmptyStateView: View {
                     .font(UIConstants.Inbox.DefaultStyle.EmptyState.MESSAGE_FONT)
                     .foregroundColor(UIConstants.Inbox.DefaultStyle.EmptyState.MESSAGE_COLOR)
             }
-            
-            Button(UIConstants.Inbox.DefaultStyle.EmptyState.BUTTON_TITLE) {
-                onRefresh()
-            }
-            .buttonStyle(.bordered)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(UIConstants.Inbox.DefaultStyle.EmptyState.PADDING)

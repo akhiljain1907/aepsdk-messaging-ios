@@ -18,12 +18,12 @@ import Foundation
 /// Default heading view for the Inbox
 @available(iOS 15.0, *)
 struct DefaultHeadingView: View {
-    let heading: Heading
+    let heading: AEPText
     
     var body: some View {
         HStack {
             Spacer()
-            heading.text.view
+            heading.view
             Spacer()
         }
         .padding(.horizontal, UIConstants.Inbox.DefaultStyle.Heading.HORIZONTAL_PADDING)
@@ -36,8 +36,8 @@ struct DefaultHeadingView: View {
     
     /// Applies default styling to the heading text if not already customized
     private func applyDefaultStyling() {
-        heading.text.font = UIConstants.Inbox.DefaultStyle.Heading.FONT
-        heading.text.textColor = UIConstants.Inbox.DefaultStyle.Heading.COLOR
+        heading.font = UIConstants.Inbox.DefaultStyle.Heading.FONT
+        heading.textColor = UIConstants.Inbox.DefaultStyle.Heading.COLOR
     }
 }
 

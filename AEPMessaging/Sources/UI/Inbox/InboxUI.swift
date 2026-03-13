@@ -67,7 +67,7 @@ public class InboxUI: Identifiable, ObservableObject {
     internal var customEmptyView: ((EmptyStateSettings?) -> AnyView)?
     
     /// Custom heading view builder
-    internal var customHeadingView: ((Heading) -> AnyView)?
+    internal var customHeadingView: ((AEPText) -> AnyView)?
     
     // MARK: - Pull-to-Refresh Properties
     
@@ -226,7 +226,7 @@ public class InboxUI: Identifiable, ObservableObject {
         var contentCardPropositions: [Proposition] = []
         
         for proposition in propositions {
-            if proposition.items.first?.schema == .containerItem {
+            if proposition.items.first?.schema == .inbox {
                 inboxProposition = proposition
                 Log.debug(label: UIConstants.LOG_TAG,
                          "Found inbox configuration (container-item) with ID: \(proposition.uniqueId)")
@@ -432,7 +432,7 @@ public class InboxUI: Identifiable, ObservableObject {
     
     /// Sets a custom heading view to be displayed at the top of the inbox
     /// - Parameter builder: A closure that takes a Heading object and returns a SwiftUI view wrapped in AnyView
-    public func setHeadingView(_ builder: @escaping (Heading) -> AnyView) {
+    public func setHeadingView(_ builder: @escaping (AEPText) -> AnyView) {
         self.customHeadingView = builder
     }
 }

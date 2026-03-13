@@ -49,10 +49,10 @@ enum MessagingConstants {
         static let HTML_CONTENT = "https://ns.adobe.com/personalization/html-content-item"
         static let JSON_CONTENT = "https://ns.adobe.com/personalization/json-content-item"
         static let RULESET_ITEM = "https://ns.adobe.com/personalization/ruleset-item"
-        static let INBOX_ITEM = "https://ns.adobe.com/personalization/container-item"
         static let DEFAULT_CONTENT = "https://ns.adobe.com/personalization/default-content-item"
         static let IN_APP = "https://ns.adobe.com/personalization/message/in-app"
         static let CONTENT_CARD = "https://ns.adobe.com/personalization/message/content-card"
+        static let INBOX = "https://ns.adobe.com/personalization/message/inbox"
         static let NATIVE_ALERT = "https://ns.adobe.com/personalization/message/native-alert"
         static let EVENT_HISTORY_OPERATION = "https://ns.adobe.com/personalization/eventHistoryOperation"
 
