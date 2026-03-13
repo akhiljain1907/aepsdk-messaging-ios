@@ -18,7 +18,7 @@
 @available(iOS 15.0, *)
 public class InboxSettings: NSObject, Codable {
     /// Heading content for the inbox
-    public var heading: Heading?
+    public var heading: AEPText?
     
     /// Layout configuration including orientation
     public let layout: LayoutSettings
@@ -47,7 +47,7 @@ public class InboxSettings: NSObject, Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        heading = try? container.decode(Heading.self, forKey: .heading)
+        heading = try? container.decode(AEPText.self, forKey: .heading)
         layout = try container.decode(LayoutSettings.self, forKey: .layout)
         capacity = try container.decode(Int.self, forKey: .capacity)
         emptyStateSettings = try? container.decode(EmptyStateSettings.self, forKey: .emptyStateSettings)

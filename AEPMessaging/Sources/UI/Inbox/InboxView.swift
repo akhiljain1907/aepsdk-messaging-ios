@@ -103,7 +103,7 @@ struct InboxView: View {
         }
     }
     
-    private func headerView(_ heading: Heading) -> some View {
+    private func headerView(_ heading: AEPText) -> some View {
         Group {
             if let customView = inbox.customHeadingView {
                 customView(heading)

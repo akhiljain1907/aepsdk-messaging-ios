@@ -119,7 +119,6 @@ enum UIConstants {
                 static let MESSAGE = "No content cards available"
                 static let MESSAGE_FONT = Font.headline
                 static let MESSAGE_COLOR = Color.secondary
-                static let BUTTON_TITLE = "Refresh"
                 static let IMAGE_MAX_SIZE: CGFloat = 120
                 static let PADDING: CGFloat = 16
             }

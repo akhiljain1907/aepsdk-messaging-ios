@@ -30,7 +30,7 @@ public enum SchemaType: Int, Codable {
     /// Schema for Event History Operation consequences used with content cards
     case eventHistoryOperation = 9
     /// Schema for Container Item (Inbox)
-    case containerItem = 11
+    case inbox = 11
 
     /// Initializes SchemaType with the provided content schema string
     /// - Parameter schema: SchemaType content schema string
@@ -64,8 +64,8 @@ public enum SchemaType: Int, Codable {
         case MessagingConstants.PersonalizationSchemas.EVENT_HISTORY_OPERATION:
             self = .eventHistoryOperation
 
-        case MessagingConstants.PersonalizationSchemas.INBOX_ITEM:
-            self = .containerItem
+        case MessagingConstants.PersonalizationSchemas.INBOX:
+            self = .inbox
 
         default:
             self = .unknown
@@ -104,8 +104,8 @@ public enum SchemaType: Int, Codable {
         case .eventHistoryOperation:
             return MessagingConstants.PersonalizationSchemas.EVENT_HISTORY_OPERATION
 
-        case .containerItem:
-            return MessagingConstants.PersonalizationSchemas.INBOX_ITEM
+        case .inbox:
+            return MessagingConstants.PersonalizationSchemas.INBOX
 
         default:
             return ""
