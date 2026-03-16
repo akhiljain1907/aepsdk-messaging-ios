@@ -24,7 +24,7 @@ struct HomeView: View {
                 }
             CardsView()
                 .tabItem {
-                    Label("Cards", systemImage: "tray.and.arrow.down.fill")
+                    Label("Cards", systemImage: "rectangle.on.rectangle")
                 }
             InboxView()
                 .tabItem {

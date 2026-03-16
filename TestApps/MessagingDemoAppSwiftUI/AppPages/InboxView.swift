@@ -227,48 +227,50 @@ struct InboxView: View, ContentCardUIEventListening, InboxEventListening {
 class InboxCustomizer: ContentCardCustomizing {
 
     func customize(template: LargeImageTemplate) {
-        // Basic styling for large image cards
         template.title.textColor = .primary
-        template.title.font = .headline
+        template.title.font = .system(size: 16, weight: .bold)
         template.body?.textColor = .secondary
-        template.body?.font = .body
+        template.body?.font = .caption
 
-        // Customize buttons with blue styling
-        customizeButtons(template.buttons)
+        template.buttons?.first?.text.font = .system(size: 13)
+        template.buttons?.first?.text.textColor = .primary
+        template.buttons?.first?.modifier = AEPViewModifier(InboxButtonModifier())
 
-        // Customize dismiss button
-        template.dismissButton?.image.iconColor = .primary
+        template.image?.contentMode = .fill
+        template.image?.modifier = AEPViewModifier(InboxLargeImageModifier())
+
+        template.rootVStack.spacing = 0
+        template.textVStack.alignment = .leading
+        template.textVStack.spacing = 4
+        template.textVStack.modifier = AEPViewModifier(InboxTextAreaModifier())
+        template.buttonHStack.modifier = AEPViewModifier(InboxLargeButtonHStackModifier())
+        template.rootVStack.modifier = AEPViewModifier(InboxCardContainerModifier())
+
+        template.dismissButton?.image.iconColor = .white
+        template.dismissButton?.image.iconFont = .system(size: 12, weight: .semibold)
     }
 
     func customize(template: SmallImageTemplate) {
-        // Smaller title font with better styling
         template.title.textColor = .primary
-        template.title.font = .system(size: 16, weight: .semibold)
-
-        // Smaller description font
+        template.title.font = .system(size: 15, weight: .bold)
         template.body?.textColor = .secondary
-        template.body?.font = .system(size: 13, weight: .regular)
+        template.body?.font = .caption
 
-        // Set image to 100x100 with rounded corners
-        template.image?.modifier = AEPViewModifier(ImageViewModifier())
+        template.buttons?.first?.text.font = .system(size: 13)
+        template.buttons?.first?.text.textColor = .primary
+        template.buttons?.first?.modifier = AEPViewModifier(InboxButtonModifier())
 
-        // Clear template background - handled in modifier instead
-        template.backgroundColor = nil
+        template.image?.modifier = AEPViewModifier(InboxSmallImageModifier())
 
-        // Improve spacing between elements
-        template.rootHStack.spacing = 12
-        template.textVStack.spacing = 6
-        template.buttonHStack.spacing = 8
+        template.rootHStack.spacing = 0
+        template.textVStack.alignment = .leading
+        template.textVStack.spacing = 4
+        template.textVStack.modifier = AEPViewModifier(InboxTextAreaModifier())
+        template.buttonHStack.modifier = AEPViewModifier(InboxSmallButtonHStackModifier())
+        template.rootHStack.modifier = AEPViewModifier(InboxCardContainerModifier())
 
-        // Add enhanced card styling with corner radius, border, and shadow
-        template.rootHStack.modifier = AEPViewModifier(SmallImageCardBorderModifier())
-
-        // Customize buttons with enhanced styling
-        customizeButtons(template.buttons)
-
-        // Customize dismiss button
-        template.dismissButton?.image.iconColor = .gray
-        template.dismissButton?.image.iconFont = .system(size: 14, weight: .semibold)
+        template.dismissButton?.image.iconColor = .primary
+        template.dismissButton?.image.iconFont = .system(size: 10, weight: .semibold)
 
         template.unreadIcon?.image.iconColor = .yellow
         template.unreadIcon?.image.iconFont = .system(size: 20, weight: .semibold)
@@ -276,71 +278,77 @@ class InboxCustomizer: ContentCardCustomizing {
     }
 
     func customize(template: ImageOnlyTemplate) {
-        // Customize dismiss button
-        template.dismissButton?.image.iconColor = .primary
-    }
-
-    // MARK: - Button Styling Helper
-
-    private func customizeButtons(_ buttons: [AEPButton]?) {
-        guard let buttons = buttons else { return }
-
-        for button in buttons {
-            button.text.textColor = .white
-            button.text.font = .system(size: 14, weight: .semibold)
-            button.modifier = AEPViewModifier(EnhancedButtonStyleModifier())
-        }
+        template.dismissButton?.image.iconColor = .white
+        template.dismissButton?.image.iconFont = .system(size: 10)
     }
 }
 
-// MARK: - Enhanced Button Style Modifier
+// MARK: - Large Image Modifiers
 
-struct EnhancedButtonStyleModifier: ViewModifier {
+struct InboxLargeImageModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .padding(.vertical, 10)
-            .padding(.horizontal, 24)
-            .background(
-                LinearGradient(
-                    gradient: Gradient(colors: [Color.blue, Color.blue.opacity(0.8)]),
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-            )
-            .cornerRadius(20)
-            .shadow(color: .blue.opacity(0.4), radius: 4, x: 0, y: 2)
+            .frame(maxWidth: .infinity, minHeight: 180, maxHeight: 180)
+            .clipped()
     }
 }
 
-// MARK: - Image View Modifier
+// MARK: - Small Image Modifiers
 
-struct ImageViewModifier: ViewModifier {
+struct InboxSmallImageModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .frame(width: 100, height: 100)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .shadow(color: .black.opacity(0.1), radius: 3, x: 0, y: 2)
+            .frame(width: 110)
+            .frame(maxHeight: .infinity)
+            .clipped()
     }
 }
 
-// MARK: - Small Image Card Border Modifier
+// MARK: - Shared Modifiers
 
-struct SmallImageCardBorderModifier: ViewModifier {
+struct InboxTextAreaModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .padding(16)
-            .overlay(
-                RoundedRectangle(cornerRadius: 16)
-                    .stroke(
-                        LinearGradient(
-                            gradient: Gradient(colors: [Color.blue.opacity(0.2), Color.purple.opacity(0.1)]),
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        ),
-                        lineWidth: 1.5
-                    )
-            )
-            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .padding(.horizontal, 14)
+            .padding(.top, 12)
+            .padding(.bottom, 4)
+    }
+}
+
+struct InboxCardContainerModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .frame(maxWidth: .infinity)
+            .background(Color(.systemBackground))
+            .clipShape(RoundedRectangle(cornerRadius: 14))
             .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
+    }
+}
+
+struct InboxLargeButtonHStackModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 14)
+            .padding(.bottom, 14)
+    }
+}
+
+struct InboxSmallButtonHStackModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 14)
+            .padding(.vertical, 8)
+    }
+}
+
+struct InboxButtonModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .padding(.vertical, 6)
+            .padding(.horizontal, 14)
+            .background(Color.primary.opacity(0.08))
+            .cornerRadius(8)
     }
 }
