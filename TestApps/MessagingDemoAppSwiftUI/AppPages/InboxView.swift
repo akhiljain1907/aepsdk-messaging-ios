@@ -1,0 +1,346 @@
+/*
+Copyright 2023 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+import AEPMessaging
+import SwiftUI
+
+struct InboxView: View, ContentCardUIEventListening, InboxEventListening {
+
+    @State private var inboxUI: InboxUI?
+
+    var body: some View {
+        VStack(spacing: 0) {
+            if let inboxUI = inboxUI {
+                inboxUI.view
+            }
+        }
+        .navigationTitle("Inbox Demo")
+        .onAppear {
+            // Only initialize once
+            guard inboxUI == nil else { return }
+            let surface = Surface(path: Constants.SurfaceName.INBOX)
+            // Get InboxUI immediately - it starts in loading state
+            let inbox = Messaging.getInboxUI(
+                for: surface,
+                customizer: InboxCustomizer(),
+                listener: self
+            )
+            inboxUI = inbox
+
+            // Configure inbox properties
+            inbox.isPullToRefreshEnabled = true
+            inbox.cardSpacing = 20
+            inbox.contentPadding = EdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10)
+
+            // Uncomment to apply custom views:
+            // applyCustomHeadingView(inbox)
+            // applyCustomLoadingView(inbox)
+            // applyCustomErrorView(inbox)
+            // applyCustomEmptyView(inbox)
+        }
+    }
+
+    // MARK: - Custom View Helpers
+
+    private func applyCustomHeadingView(_ inbox: InboxUI) {
+        inbox.setHeadingView { heading in
+            AnyView(
+                HStack {
+                    Text(heading.content)
+                        .font(.title)
+                        .fontWeight(.bold)
+                    Spacer()
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 16)
+                .background(
+                    LinearGradient(
+                        colors: [Color.blue.opacity(0.1), Color.purple.opacity(0.05)],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
+            )
+        }
+    }
+
+    private func applyCustomLoadingView(_ inbox: InboxUI) {
+        inbox.setLoadingView {
+            AnyView(
+                VStack(spacing: 16) {
+                    ProgressView()
+                        .scaleEffect(2.0)
+                        .tint(.blue)
+                    Text("Loading your offers")
+                        .font(.headline)
+                        .foregroundColor(.blue)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color(.systemGroupedBackground))
+            )
+        }
+    }
+
+    private func applyCustomErrorView(_ inbox: InboxUI) {
+        inbox.setErrorView { _ in
+            AnyView(
+                VStack(spacing: 20) {
+                    Image("ErrorMessageIcon")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 200, height: 150)
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                        .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 4)
+
+                    VStack(spacing: 8) {
+                        Text("SORRY")
+                            .font(.system(size: 32, weight: .thin))
+                            .foregroundColor(.gray)
+                            .tracking(4)
+                        Text("something went wrong")
+                            .font(.system(size: 18, weight: .light))
+                            .foregroundColor(.gray)
+                        Text("on our end")
+                            .font(.system(size: 18, weight: .light))
+                            .foregroundColor(.gray)
+                    }
+                    .padding(.top, 8)
+
+                    Button {
+                        inbox.refresh()
+                    } label: {
+                        HStack(spacing: 8) {
+                            Image(systemName: "arrow.clockwise")
+                            Text("Try Again")
+                        }
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 32)
+                        .padding(.vertical, 12)
+                        .background(Color.blue)
+                        .cornerRadius(8)
+                    }
+                    .padding(.top, 8)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color(.systemBackground))
+            )
+        }
+    }
+
+    private func applyCustomEmptyView(_ inbox: InboxUI) {
+        inbox.setEmptyView { _ in
+            AnyView(
+                VStack(spacing: 24) {
+                    Image("emptyMessageIcon")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 140, height: 140)
+                        .shadow(color: .blue.opacity(0.2), radius: 10, x: 0, y: 4)
+
+                    VStack(spacing: 12) {
+                        Text("No new message")
+                            .font(.system(size: 24, weight: .semibold))
+                            .foregroundColor(.primary)
+                        Text("Check back later for exciting offers\n(or boring ads, we'll surprise you! 🎁)")
+                            .font(.system(size: 16))
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                            .lineSpacing(4)
+                    }
+                    .padding(.horizontal, 32)
+
+                    Button {
+                        inbox.refresh()
+                    } label: {
+                        HStack(spacing: 8) {
+                            Image(systemName: "arrow.clockwise")
+                            Text("Refresh")
+                        }
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 28)
+                        .padding(.vertical, 12)
+                        .background(
+                            LinearGradient(
+                                colors: [Color.blue, Color.blue.opacity(0.8)],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        )
+                        .cornerRadius(24)
+                        .shadow(color: .blue.opacity(0.3), radius: 6, x: 0, y: 3)
+                    }
+                    .padding(.top, 8)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color(.systemBackground))
+            )
+        }
+    }
+
+    // MARK: - Event Listeners
+
+    // Inbox Events
+    func onLoading(_ inbox: InboxUI) {
+        print("Inbox is loading...")
+    }
+
+    func onSuccess(_ inbox: InboxUI) {
+        print("Inbox loaded successfully")
+    }
+
+    func onError(_ inbox: InboxUI, _ error: Error) {
+        print("Inbox error: \(error.localizedDescription)")
+    }
+
+    // Content Card Events
+    func onCardDismissed(_ card: ContentCardUI) {
+        print("Card dismissed: \(card.id)")
+    }
+
+    func onCardDisplayed(_ card: ContentCardUI) {
+        print("Card displayed: \(card.id)")
+    }
+
+    func onCardInteracted(_ card: ContentCardUI, _ interactionId: String, actionURL: URL?) -> Bool {
+        print("Card interacted: \(interactionId)")
+        return false // Return false to allow default URL handling
+    }
+
+    func onCardCreated(_ card: ContentCardUI) {
+        print("Card created: \(card.id)")
+    }
+}
+
+// MARK: - Inbox Card Customizer
+
+class InboxCustomizer: ContentCardCustomizing {
+
+    func customize(template: LargeImageTemplate) {
+        // Basic styling for large image cards
+        template.title.textColor = .primary
+        template.title.font = .headline
+        template.body?.textColor = .secondary
+        template.body?.font = .body
+
+        // Customize buttons with blue styling
+        customizeButtons(template.buttons)
+
+        // Customize dismiss button
+        template.dismissButton?.image.iconColor = .primary
+    }
+
+    func customize(template: SmallImageTemplate) {
+        // Smaller title font with better styling
+        template.title.textColor = .primary
+        template.title.font = .system(size: 16, weight: .semibold)
+
+        // Smaller description font
+        template.body?.textColor = .secondary
+        template.body?.font = .system(size: 13, weight: .regular)
+
+        // Set image to 100x100 with rounded corners
+        template.image?.modifier = AEPViewModifier(ImageViewModifier())
+
+        // Clear template background - handled in modifier instead
+        template.backgroundColor = nil
+
+        // Improve spacing between elements
+        template.rootHStack.spacing = 12
+        template.textVStack.spacing = 6
+        template.buttonHStack.spacing = 8
+
+        // Add enhanced card styling with corner radius, border, and shadow
+        template.rootHStack.modifier = AEPViewModifier(SmallImageCardBorderModifier())
+
+        // Customize buttons with enhanced styling
+        customizeButtons(template.buttons)
+
+        // Customize dismiss button
+        template.dismissButton?.image.iconColor = .gray
+        template.dismissButton?.image.iconFont = .system(size: 14, weight: .semibold)
+
+        template.unreadIcon?.image.iconColor = .yellow
+        template.unreadIcon?.image.iconFont = .system(size: 20, weight: .semibold)
+        template.unreadIcon?.alignment = .topLeading
+    }
+
+    func customize(template: ImageOnlyTemplate) {
+        // Customize dismiss button
+        template.dismissButton?.image.iconColor = .primary
+    }
+
+    // MARK: - Button Styling Helper
+
+    private func customizeButtons(_ buttons: [AEPButton]?) {
+        guard let buttons = buttons else { return }
+
+        for button in buttons {
+            button.text.textColor = .white
+            button.text.font = .system(size: 14, weight: .semibold)
+            button.modifier = AEPViewModifier(EnhancedButtonStyleModifier())
+        }
+    }
+}
+
+// MARK: - Enhanced Button Style Modifier
+
+struct EnhancedButtonStyleModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .padding(.vertical, 10)
+            .padding(.horizontal, 24)
+            .background(
+                LinearGradient(
+                    gradient: Gradient(colors: [Color.blue, Color.blue.opacity(0.8)]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            )
+            .cornerRadius(20)
+            .shadow(color: .blue.opacity(0.4), radius: 4, x: 0, y: 2)
+    }
+}
+
+// MARK: - Image View Modifier
+
+struct ImageViewModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .frame(width: 100, height: 100)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .shadow(color: .black.opacity(0.1), radius: 3, x: 0, y: 2)
+    }
+}
+
+// MARK: - Small Image Card Border Modifier
+
+struct SmallImageCardBorderModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .padding(16)
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(
+                        LinearGradient(
+                            gradient: Gradient(colors: [Color.blue.opacity(0.2), Color.purple.opacity(0.1)]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ),
+                        lineWidth: 1.5
+                    )
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
+    }
+}
