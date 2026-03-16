@@ -30,13 +30,13 @@ struct HomeView: View {
                 .tabItem {
                     Label("Inbox", systemImage: "tray.fill")
                 }
-            CodeBasedView()
-                .tabItem {
-                    Label("Code Experiences", systemImage: "newspaper.fill")
-                }
             LiveActivityView()
                 .tabItem {
                     Label("Live Activity", systemImage: "app.badge")
+                }
+            CodeBasedView()
+                .tabItem {
+                    Label("Code Experiences", systemImage: "newspaper.fill")
                 }
             PushView()
                 .tabItem {
