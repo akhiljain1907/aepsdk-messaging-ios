@@ -13,338 +13,216 @@ governing permissions and limitations under the License.
 import AEPMessaging
 import SwiftUI
 
-struct CardsView: View, ContentCardUIEventListening, InboxEventListening {
-    
-    @State private var inboxUI: InboxUI?
-    
-    var body: some View {
-        VStack(spacing: 0) {
-            if let inboxUI = inboxUI {
-                inboxUI.view
-            }
-        }
-        .navigationTitle("Inbox Demo")        
-        .onAppear {
-            // Only initialize once
-            guard inboxUI == nil else { return }
-            let surface = Surface(path: "inboxcard")
-            // Get InboxUI immediately - it starts in loading state
-            let inbox = Messaging.getInboxUI(
-                for: surface,
-                customizer: CardCustomizer(),
-                listener: self
-            )
-            inboxUI = inbox
-                        
-            // Configure inbox properties
-            inbox.isPullToRefreshEnabled = true
-            inbox.cardSpacing = 20
-            inbox.contentPadding = EdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10)
-                                    
-            // Set custom heading view
-            inbox.setHeadingView { heading in
-               AnyView(
-                   HStack {
-                       Text(heading.text.content)
-                           .font(.title)
-                           .fontWeight(.bold)
-                       Spacer()
-                   }
-                   .padding(.horizontal, 20)
-                   .padding(.vertical, 16)
-                   .background(
-                       LinearGradient(
-                           colors: [Color.blue.opacity(0.1), Color.purple.opacity(0.05)],
-                           startPoint: .leading,
-                           endPoint: .trailing
-                       )
-                   )
-               )
-           }
-            
-            // Set custom loading view
-            inbox.setLoadingView {
-                AnyView(
-                    VStack(spacing: 16) {
-                        ProgressView()
-                            .scaleEffect(2.0)
-                            .tint(.blue)
-                        Text("Loading your offers")
-                            .font(.headline)
-                            .foregroundColor(.blue)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color(.systemGroupedBackground))
-                )
-            }
-            
-            // Set custom error view
-            inbox.setErrorView { error in
-                AnyView(
-                    VStack(spacing: 20) {
-                        // Sad puppy image
-                        Image("ErrorMessageIcon")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 200, height: 150)
-                            .clipShape(RoundedRectangle(cornerRadius: 16))
-                            .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 4)
-                        
-                        // Main error message
-                        VStack(spacing: 8) {
-                            Text("SORRY")
-                                .font(.system(size: 32, weight: .thin))
-                                .foregroundColor(.gray)
-                                .tracking(4)
-                            
-                            Text("something went wrong")
-                                .font(.system(size: 18, weight: .light))
-                                .foregroundColor(.gray)
-                            
-                            Text("on our end")
-                                .font(.system(size: 18, weight: .light))
-                                .foregroundColor(.gray)
-                        }
-                        .padding(.top, 8)                        
-                        
-                        // Refresh button
-                        Button {
-                            inbox.refresh()
-                        } label: {
-                            HStack(spacing: 8) {
-                                Image(systemName: "arrow.clockwise")
-                                Text("Try Again")
-                            }
-                            .font(.system(size: 16, weight: .medium))
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 32)
-                            .padding(.vertical, 12)
-                            .background(Color.blue)
-                            .cornerRadius(8)
-                        }
-                        .padding(.top, 8)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color(.systemBackground))
-                )
-            }
-            
-            // Set custom empty view
-            inbox.setEmptyView { emptyStateSettings in
-                AnyView(
-                    VStack(spacing: 24) {
-                        // Mailbox icon
-                        Image("emptyMessageIcon")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 140, height: 140)
-                            .shadow(color: .blue.opacity(0.2), radius: 10, x: 0, y: 4)
-                        
-                        // Title and body text
-                        VStack(spacing: 12) {
-                            Text("No new message")
-                                .font(.system(size: 24, weight: .semibold))
-                                .foregroundColor(.primary)
-                            
-                            Text("Check back later for exciting offers\n(or boring ads, we'll surprise you! 🎁)")
-                                .font(.system(size: 16))
-                                .foregroundColor(.secondary)
-                                .multilineTextAlignment(.center)
-                                .lineSpacing(4)
-                        }
-                        .padding(.horizontal, 32)
-                        
-                        // Refresh button
-                        Button {
-                            inbox.refresh()
-                        } label: {
-                            HStack(spacing: 8) {
-                                Image(systemName: "arrow.clockwise")
-                                Text("Refresh")
-                            }
-                            .font(.system(size: 15, weight: .medium))
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 28)
-                            .padding(.vertical, 12)
-                            .background(
-                                LinearGradient(
-                                    colors: [Color.blue, Color.blue.opacity(0.8)],
-                                    startPoint: .top,
-                                    endPoint: .bottom
-                                )
-                            )
-                            .cornerRadius(24)
-                            .shadow(color: .blue.opacity(0.3), radius: 6, x: 0, y: 3)
-                        }
-                        .padding(.top, 8)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color(.systemBackground))
-                )
-            }
-        }
-    }
-    
-    // MARK: - Event Listeners
-    
-    // Inbox Events
-    func onLoading(_ inbox: InboxUI) {
-        print("Inbox is loading...")
-    }
-    
-    func onSuccess(_ inbox: InboxUI) {
-        print("Inbox loaded successfully")
-    }
-    
-    func onError(_ inbox: InboxUI, _ error: Error) {
-        print("Inbox error: \(error.localizedDescription)")
-    }
-    
-    // Content Card Events
-    func onCardDismissed(_ card: ContentCardUI) {
-        print("Card dismissed: \(card.id)")
-    }
-    
-    func onCardDisplayed(_ card: ContentCardUI) {
-        print("Card displayed: \(card.id)")
-    }
-    
-    func onCardInteracted(_ card: ContentCardUI, _ interactionId: String, actionURL: URL?) -> Bool {
-        print("Card interacted: \(interactionId)")
+struct CardsView: View, ContentCardUIEventListening {
 
-        return false // Return false to allow default URL handling
+    let cardsSurface = Surface(path: Constants.SurfaceName.CONTENT_CARD)
+    @State var savedCards: [ContentCardUI] = []
+    @State private var viewLoaded: Bool = false
+    @State private var showLoadingIndicator: Bool = false
+
+    var body: some View {
+        VStack {
+            TabHeader(title: "Content Cards", refreshAction: {
+                refreshCards()
+            }, redownloadAction: {
+                downloadCards()
+                refreshCards()
+            })
+
+            ZStack {
+                ScrollView(.vertical, showsIndicators: false) {
+                    LazyVStack(spacing: 20) {
+                        ForEach(savedCards) { card in
+                            card.view
+                                .padding(.horizontal, 16)
+                        }
+                    }
+                }
+
+                if showLoadingIndicator {
+                    ProgressView("Loading...")
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .padding()
+                        .background(Color.white.opacity(0.8))
+                        .cornerRadius(10)
+                        .shadow(radius: 10)
+                }
+            }
+        }
+        .onAppear() {
+            if !viewLoaded {
+                viewLoaded = true
+                refreshCards()
+            }
+        }
     }
-    
-    func onCardCreated(_ card: ContentCardUI) {
-        print("Card created: \(card.id)")
+
+    func refreshCards() {
+        showLoadingIndicator = true
+        let cardsPageSurface = Surface(path: Constants.SurfaceName.CONTENT_CARD)
+        Messaging.getContentCardsUI(for: cardsPageSurface,
+                                    customizer: CardCustomizer(),
+                                    listener: self) { result in
+            showLoadingIndicator = false
+            switch result {
+            case .success(let cards):
+                // sort the cards by priority order and save them to our state property
+                savedCards = cards.sorted { $0.priority > $1.priority }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+
+    func downloadCards() {
+        showLoadingIndicator = true
+        Messaging.updatePropositionsForSurfaces([cardsSurface])
+    }
+
+    func onDisplay(_ card: ContentCardUI) {
+        print("TestAppLog : ContentCard Displayed")
+    }
+
+    func onDismiss(_ card: ContentCardUI) {
+        print("TestAppLog : ContentCard Dismissed")
+        savedCards.removeAll(where: { $0.id == card.id })
+    }
+
+    func onInteract(_ card: ContentCardUI, _ interactionId: String, actionURL: URL?) -> Bool {
+        print("TestAppLog : ContentCard Interacted : Interaction - \(interactionId)")
+        return false
     }
 }
-
-// MARK: - Content Card Customizer
 
 class CardCustomizer: ContentCardCustomizing {
-    
-    func customize(template: LargeImageTemplate) {
-        // Basic styling for large image cards
+    func customize(template: AEPMessaging.LargeImageTemplate) {
         template.title.textColor = .primary
-        template.title.font = .headline
+        template.title.font = .system(size: 16, weight: .bold)
         template.body?.textColor = .secondary
-        template.body?.font = .body
-        
-        // Customize buttons with blue styling
-        customizeButtons(template.buttons)
-        
-        // Customize dismiss button
-        template.dismissButton?.image.iconColor = .primary
+        template.body?.font = .caption
+
+        template.buttons?.first?.text.font = .system(size: 13)
+        template.buttons?.first?.text.textColor = .primary
+        template.buttons?.first?.modifier = AEPViewModifier(ButtonModifier())
+
+        // Image: full width, fixed height, flush to top/left/right edges
+        template.image?.contentMode = .fill
+        template.image?.modifier = AEPViewModifier(LargeImageModifier())
+
+        // No spacing so image sits flush against card top
+        template.rootVStack.spacing = 0
+        template.textVStack.alignment = .leading
+        template.textVStack.spacing = 4
+        // Padding only on the text area
+        template.textVStack.modifier = AEPViewModifier(TextAreaModifier())
+        template.buttonHStack.modifier = AEPViewModifier(LargeButtonHStackModifier())
+        // Card container — no inner padding so image reaches edges
+        template.rootVStack.modifier = AEPViewModifier(CardContainerModifier())
+
+        template.dismissButton?.image.iconColor = .white
+        template.dismissButton?.image.iconFont = .system(size: 12, weight: .semibold)
     }
-    
+
     func customize(template: SmallImageTemplate) {
-        // Smaller title font with better styling
         template.title.textColor = .primary
-        template.title.font = .system(size: 16, weight: .semibold)
-        
-        // Smaller description font
+        template.title.font = .system(size: 15, weight: .bold)
         template.body?.textColor = .secondary
-        template.body?.font = .system(size: 13, weight: .regular)
-        
-        // Set image to 100x100 with rounded corners
-        template.image?.modifier = AEPViewModifier(ImageViewModifier())
-        
-        // Clear template background - handled in modifier instead
-        template.backgroundColor = nil
-        
-        // Improve spacing between elements
-        template.rootHStack.spacing = 12
-        template.textVStack.spacing = 6
-        template.buttonHStack.spacing = 8
-        
-        // Add enhanced card styling with corner radius, border, and shadow
-        template.rootHStack.modifier = AEPViewModifier(SmallImageCardBorderModifier())
-        
-        // Customize buttons with enhanced styling
-        customizeButtons(template.buttons)
-        
-        // Customize dismiss button
-        template.dismissButton?.image.iconColor = .gray
-        template.dismissButton?.image.iconFont = .system(size: 14, weight: .semibold)
-        
-        template.unreadIcon?.image.iconColor = .yellow
-        template.unreadIcon?.image.iconFont = .system(size: 20, weight: .semibold)
-        template.unreadIcon?.alignment = .topLeading
-    }
-    
-    func customize(template: ImageOnlyTemplate) {
-        // Basic styling for image-only cards
-        // Note: ImageOnlyTemplate doesn't have buttons, just image and dismiss button
-        
-        // Customize dismiss button
+        template.body?.font = .caption
+
+        template.buttons?.first?.text.font = .system(size: 13)
+        template.buttons?.first?.text.textColor = .primary
+        template.buttons?.first?.modifier = AEPViewModifier(ButtonModifier())
+
+        // Image: fixed size, flush to left/top/bottom edges
+        template.image?.modifier = AEPViewModifier(SmallImageModifier())
+
+        template.rootHStack.spacing = 0
+        template.textVStack.alignment = .leading
+        template.textVStack.spacing = 4
+        // Padding only on the text area
+        template.textVStack.modifier = AEPViewModifier(TextAreaModifier())
+        template.buttonHStack.modifier = AEPViewModifier(SmallButtonHStackModifier())
+        // Card container — no inner padding so image reaches edges
+        template.rootHStack.modifier = AEPViewModifier(CardContainerModifier())
+
         template.dismissButton?.image.iconColor = .primary
+        template.dismissButton?.image.iconFont = .system(size: 10, weight: .semibold)
     }
-    
-    // MARK: - Button Styling Helper
-    
-    private func customizeButtons(_ buttons: [AEPButton]?) {
-        guard let buttons = buttons else { return }
-        
-        for button in buttons {
-            // Set button text with better styling
-            button.text.textColor = .white
-            button.text.font = .system(size: 14, weight: .semibold)
-            
-            // Apply enhanced button styling using AEPViewModifier
-            button.modifier = AEPViewModifier(EnhancedButtonStyleModifier())
+
+    func customize(template: ImageOnlyTemplate) {
+        template.dismissButton?.image.iconColor = .white
+        template.dismissButton?.image.iconFont = .system(size: 10)
+    }
+
+    // MARK: - Large Image Modifiers
+
+    struct LargeImageModifier: ViewModifier {
+        func body(content: Content) -> some View {
+            content
+                .frame(maxWidth: .infinity, minHeight: 180, maxHeight: 180)
+                .clipped()
         }
     }
-}
 
-// MARK: - Enhanced Button Style Modifier
+    // MARK: - Small Image Modifiers
 
-struct EnhancedButtonStyleModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .padding(.vertical, 10)
-            .padding(.horizontal, 24)
-            .background(
-                LinearGradient(
-                    gradient: Gradient(colors: [Color.blue, Color.blue.opacity(0.8)]),
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-            )
-            .cornerRadius(20)
-            .shadow(color: .blue.opacity(0.4), radius: 4, x: 0, y: 2)
+    struct SmallImageModifier: ViewModifier {
+        func body(content: Content) -> some View {
+            content
+                .frame(width: 110)
+                .frame(maxHeight: .infinity)
+                .clipped()
+        }
     }
-}
 
-// MARK: - Image View Modifier
+    // MARK: - Shared Modifiers
 
-struct ImageViewModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .frame(width: 100, height: 100)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .shadow(color: .black.opacity(0.1), radius: 3, x: 0, y: 2)
+    /// Padding applied to the text+body area only
+    struct TextAreaModifier: ViewModifier {
+        func body(content: Content) -> some View {
+            content
+                .padding(.horizontal, 14)
+                .padding(.top, 12)
+                .padding(.bottom, 4)
+        }
     }
-}
 
-// MARK: - Small Image Card Border Modifier
+    /// Card container: rounded corners + subtle shadow
+    struct CardContainerModifier: ViewModifier {
+        func body(content: Content) -> some View {
+            content
+                .frame(maxWidth: .infinity)
+                .background(Color(.systemBackground))
+                .clipShape(RoundedRectangle(cornerRadius: 14))
+                .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
+        }
+    }
 
-struct SmallImageCardBorderModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .padding(16)
-            .overlay(
-                RoundedRectangle(cornerRadius: 16)
-                    .stroke(
-                        LinearGradient(
-                            gradient: Gradient(colors: [Color.blue.opacity(0.2), Color.purple.opacity(0.1)]),
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        ),
-                        lineWidth: 1.5
-                    )
-            )
-            .clipShape(RoundedRectangle(cornerRadius: 16))
-            .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
+    struct LargeButtonHStackModifier: ViewModifier {
+        func body(content: Content) -> some View {
+            content
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 14)
+                .padding(.bottom, 14)
+        }
+    }
+
+    struct SmallButtonHStackModifier: ViewModifier {
+        func body(content: Content) -> some View {
+            content
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 14)
+                .padding(.vertical, 8)
+        }
+    }
+
+    struct ButtonModifier: ViewModifier {
+        func body(content: Content) -> some View {
+            content
+                .padding(.vertical, 6)
+                .padding(.horizontal, 14)
+                .background(Color.primary.opacity(0.08))
+                .cornerRadius(8)
+        }
     }
 }
