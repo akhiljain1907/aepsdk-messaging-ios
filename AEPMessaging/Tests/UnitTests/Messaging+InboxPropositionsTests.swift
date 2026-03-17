@@ -24,7 +24,7 @@ class MessagingInboxPropositionsTests: XCTestCase {
     var mockLaunchRulesEngine: MockLaunchRulesEngine!
     var mockMessagingRulesEngine: MockMessagingRulesEngine!
     var mockContentCardRulesEngine: MockContentCardRulesEngine!
-    var messagingProperties: MessagingProperties!
+    var messagingStateManager: MessagingStateManager!
     
     override func setUp() {
         EventHub.shared.start()
@@ -33,7 +33,7 @@ class MessagingInboxPropositionsTests: XCTestCase {
         mockLaunchRulesEngine = MockLaunchRulesEngine(name: "mockLaunchRulesEngine", extensionRuntime: mockRuntime)
         mockContentCardRulesEngine = MockContentCardRulesEngine(extensionRuntime: mockRuntime, launchRulesEngine: mockLaunchRulesEngine)
         mockMessagingRulesEngine = MockMessagingRulesEngine(extensionRuntime: mockRuntime, launchRulesEngine: mockLaunchRulesEngine, cache: mockCache)
-        messagingProperties = MessagingProperties()
+        messagingStateManager = MessagingStateManager()
         
         messaging = Messaging(
             runtime: mockRuntime,
@@ -41,7 +41,7 @@ class MessagingInboxPropositionsTests: XCTestCase {
             contentCardRulesEngine: mockContentCardRulesEngine,
             expectedSurfaceUri: "mobileapp://test",
             cache: mockCache,
-            messagingProperties: messagingProperties
+            stateManager: messagingStateManager
         )
     }
     
@@ -51,7 +51,7 @@ class MessagingInboxPropositionsTests: XCTestCase {
         mockMessagingRulesEngine = nil
         mockContentCardRulesEngine = nil
         messaging = nil
-        messagingProperties = nil
+        messagingStateManager = nil
         mockRuntime = nil
     }
     
@@ -60,7 +60,7 @@ class MessagingInboxPropositionsTests: XCTestCase {
     func testUpdateInboxPropositionsAddsNewSurface() throws {
         // setup
         let surface = Surface(uri: "mobileapp://test/inbox")
-        let propositionItem = PropositionItem(itemId: "item1", schema: .containerItem, itemData: ["content": ["heading": ["content": "Test"]]])
+        let propositionItem = PropositionItem(itemId: "item1", schema: .inbox, itemData: ["content": ["heading": ["content": "Test"]]])
         let proposition = Proposition(uniqueId: "prop1", scope: surface.uri, scopeDetails: [:], items: [propositionItem])
         let newPropositions: [Surface: [Proposition]] = [surface: [proposition]]
         
@@ -79,11 +79,11 @@ class MessagingInboxPropositionsTests: XCTestCase {
     func testUpdateInboxPropositionsReplacesExistingSurface() throws {
         // setup
         let surface = Surface(uri: "mobileapp://test/inbox")
-        let propositionItem1 = PropositionItem(itemId: "item1", schema: .containerItem, itemData: ["content": ["heading": ["content": "Test1"]]])
+        let propositionItem1 = PropositionItem(itemId: "item1", schema: .inbox, itemData: ["content": ["heading": ["content": "Test1"]]])
         let proposition1 = Proposition(uniqueId: "prop1", scope: surface.uri, scopeDetails: [:], items: [propositionItem1])
         messaging.inboxPropositionsBySurface = [surface: [proposition1]]
         
-        let propositionItem2 = PropositionItem(itemId: "item2", schema: .containerItem, itemData: ["content": ["heading": ["content": "Test2"]]])
+        let propositionItem2 = PropositionItem(itemId: "item2", schema: .inbox, itemData: ["content": ["heading": ["content": "Test2"]]])
         let proposition2 = Proposition(uniqueId: "prop2", scope: surface.uri, scopeDetails: [:], items: [propositionItem2])
         let newPropositions: [Surface: [Proposition]] = [surface: [proposition2]]
         
@@ -103,9 +103,9 @@ class MessagingInboxPropositionsTests: XCTestCase {
         // setup
         let surface1 = Surface(uri: "mobileapp://test/inbox1")
         let surface2 = Surface(uri: "mobileapp://test/inbox2")
-        let propositionItem1 = PropositionItem(itemId: "item1", schema: .containerItem, itemData: [:])
+        let propositionItem1 = PropositionItem(itemId: "item1", schema: .inbox, itemData: [:])
         let proposition1 = Proposition(uniqueId: "prop1", scope: surface1.uri, scopeDetails: [:], items: [propositionItem1])
-        let propositionItem2 = PropositionItem(itemId: "item2", schema: .containerItem, itemData: [:])
+        let propositionItem2 = PropositionItem(itemId: "item2", schema: .inbox, itemData: [:])
         let proposition2 = Proposition(uniqueId: "prop2", scope: surface2.uri, scopeDetails: [:], items: [propositionItem2])
         messaging.inboxPropositionsBySurface = [surface1: [proposition1], surface2: [proposition2]]
         
@@ -124,9 +124,9 @@ class MessagingInboxPropositionsTests: XCTestCase {
     func testUpdateInboxPropositionsWithMultiplePropositionsForSameSurface() throws {
         // setup
         let surface = Surface(uri: "mobileapp://test/inbox")
-        let propositionItem1 = PropositionItem(itemId: "item1", schema: .containerItem, itemData: [:])
+        let propositionItem1 = PropositionItem(itemId: "item1", schema: .inbox, itemData: [:])
         let proposition1 = Proposition(uniqueId: "prop1", scope: surface.uri, scopeDetails: [:], items: [propositionItem1])
-        let propositionItem2 = PropositionItem(itemId: "item2", schema: .containerItem, itemData: [:])
+        let propositionItem2 = PropositionItem(itemId: "item2", schema: .inbox, itemData: [:])
         let proposition2 = Proposition(uniqueId: "prop2", scope: surface.uri, scopeDetails: [:], items: [propositionItem2])
         let newPropositions: [Surface: [Proposition]] = [surface: [proposition1, proposition2]]
         
@@ -146,7 +146,7 @@ class MessagingInboxPropositionsTests: XCTestCase {
     func testInboxPropositionsStoredInSeparateContainer() throws {
         // setup
         let surface = Surface(uri: "mobileapp://test/inbox")
-        let propositionItem = PropositionItem(itemId: "item1", schema: .containerItem, itemData: ["content": ["heading": ["content": "Test"]]])
+        let propositionItem = PropositionItem(itemId: "item1", schema: .inbox, itemData: ["content": ["heading": ["content": "Test"]]])
         let inboxProposition = Proposition(uniqueId: "inbox1", scope: surface.uri, scopeDetails: [:], items: [propositionItem])
         
         // test - directly set inbox propositions
@@ -170,7 +170,7 @@ class MessagingInboxPropositionsTests: XCTestCase {
         let surface = Surface(uri: "mobileapp://test/mixed")
         
         // Inbox proposition
-        let inboxItem = PropositionItem(itemId: "inbox1", schema: .containerItem, itemData: ["content": ["heading": ["content": "Inbox"]]])
+        let inboxItem = PropositionItem(itemId: "inbox1", schema: .inbox, itemData: ["content": ["heading": ["content": "Inbox"]]])
         let inboxProposition = Proposition(uniqueId: "inbox-prop", scope: surface.uri, scopeDetails: [:], items: [inboxItem])
         
         // CBE proposition
@@ -202,7 +202,7 @@ class MessagingInboxPropositionsTests: XCTestCase {
     func testInboxPropositionsDoNotInterfereWithOtherTypes() throws {
         // setup - only inbox, no other proposition types
         let surface = Surface(uri: "mobileapp://test/inbox-only")
-        let inboxItem = PropositionItem(itemId: "inbox1", schema: .containerItem, itemData: [:])
+        let inboxItem = PropositionItem(itemId: "inbox1", schema: .inbox, itemData: [:])
         let inboxProposition = Proposition(uniqueId: "inbox-only", scope: surface.uri, scopeDetails: [:], items: [inboxItem])
         
         // test - set only inbox

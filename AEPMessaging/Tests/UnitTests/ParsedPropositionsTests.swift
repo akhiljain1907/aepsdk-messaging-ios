@@ -65,7 +65,7 @@ class ParsedPropositionTests: XCTestCase {
         mockCodeBasedSurface = Surface(uri: "codebased")
 
         mockInboxContent = JSONFileLoader.getRulesJsonFromFile("containerItemPropositionContent")
-        mockInboxPropositionItem = PropositionItem(itemId: "inbox", schema: .containerItem, itemData: mockInboxContent)
+        mockInboxPropositionItem = PropositionItem(itemId: "inbox", schema: .inbox, itemData: mockInboxContent)
         mockInboxProposition = Proposition(uniqueId: "inbox", scope: "inbox", scopeDetails: ["key":"value"], items: [mockInboxPropositionItem])
         mockInboxSurface = Surface(uri: "inbox")
     }
