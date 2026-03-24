@@ -37,6 +37,21 @@ public class AEPUnreadIcon: ObservableObject, AEPViewModel {
     init(settings: UnreadIndicatorSettings.UnreadIconSettings) {
         self.image = settings.image
         self.alignment = settings.placement.alignment
+        // Apply a sensible default size so the icon doesn't bloat the card.
+        // Customers can override this by setting image.modifier in their ContentCardCustomizing implementation.
+        self.image.modifier = AEPViewModifier(UnreadIconDefaultModifier())
+    }
+}
+
+/// Default size constraint applied to the unread icon image.
+/// Keeps the icon at a fixed size with padding so it sits neatly as a card overlay.
+@available(iOS 15.0, *)
+private struct UnreadIconDefaultModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .frame(width: UIConstants.Inbox.DefaultStyle.UnreadIcon.SIZE,
+                   height: UIConstants.Inbox.DefaultStyle.UnreadIcon.SIZE)
+            .padding(UIConstants.Inbox.DefaultStyle.UnreadIcon.PADDING)
     }
 }
 
