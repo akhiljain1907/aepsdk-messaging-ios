@@ -31,6 +31,11 @@ public class BaseTemplate: ObservableObject {
     /// Use this property to set the background color for the content card.
     @Published public var backgroundColor: Color?
 
+    /// Custom view modifier applied to the entire card, including its background.
+    /// Use this to control card-level presentation: corner radius, shadow, border, etc.
+    /// This is applied after the background color, so clipShape here will correctly round both content and background.
+    @Published public var modifier: AEPViewModifier?
+
     /// the dismiss button model
     @Published public var dismissButton: AEPDismissButton?
 
@@ -118,5 +123,7 @@ private struct TemplateWrapperView<Content: View>: View {
                             .padding(UIConstants.CardTemplate.DefaultStyle.PADDING)
                     }
                 })
+            // Card-level modifier: applied last so it wraps content + background + overlays
+            .applyModifier(template.modifier)
     }
 }

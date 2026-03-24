@@ -244,7 +244,7 @@ class InboxCustomizer: ContentCardCustomizing {
         template.textVStack.spacing = 4
         template.textVStack.modifier = AEPViewModifier(InboxTextAreaModifier())
         template.buttonHStack.modifier = AEPViewModifier(InboxLargeButtonHStackModifier())
-        template.rootVStack.modifier = AEPViewModifier(InboxCardContainerModifier())
+        template.modifier = AEPViewModifier(InboxCardContainerModifier())
 
         template.dismissButton?.image.iconColor = .white
         template.dismissButton?.image.iconFont = .system(size: 12, weight: .semibold)
@@ -267,7 +267,7 @@ class InboxCustomizer: ContentCardCustomizing {
         template.textVStack.spacing = 4
         template.textVStack.modifier = AEPViewModifier(InboxTextAreaModifier())
         template.buttonHStack.modifier = AEPViewModifier(InboxSmallButtonHStackModifier())
-        template.rootHStack.modifier = AEPViewModifier(InboxCardContainerModifier())
+        template.modifier = AEPViewModifier(InboxCardContainerModifier())
 
         template.dismissButton?.image.iconColor = .primary
         template.dismissButton?.image.iconFont = .system(size: 10, weight: .semibold)
@@ -319,7 +319,6 @@ struct InboxCardContainerModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .frame(maxWidth: .infinity)
-            .background(Color(.systemBackground))
             .clipShape(RoundedRectangle(cornerRadius: 14))
             .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
     }

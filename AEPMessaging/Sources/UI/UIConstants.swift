@@ -137,6 +137,11 @@ enum UIConstants {
                 static let MESSAGE = "Loading..."
                 static let MESSAGE_COLOR = Color.secondary
             }
+
+            enum UnreadIcon {
+                static let SIZE: CGFloat = 24
+                static let PADDING: CGFloat = 6
+            }
         }
     }
 }
