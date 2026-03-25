@@ -68,6 +68,10 @@ target 'MessagingDemoApp' do
   app_main
 end
 
+target 'NotificationService' do
+  pod 'AEPMessagingNotification', :path => './'
+end
+
 target 'MessagingDemoAppObjC' do
   app_main
 end
