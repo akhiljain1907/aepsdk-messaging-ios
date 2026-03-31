@@ -10,8 +10,8 @@
 // governing permissions and limitations under the License.
 //
 
-import UserNotifications
 import AEPMessagingNotification
+import UserNotifications
 
 class NotificationService: UNNotificationServiceExtension {
 
@@ -21,11 +21,18 @@ class NotificationService: UNNotificationServiceExtension {
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         self.contentHandler = contentHandler
         bestAttemptContent = request.content.mutableCopy() as? UNMutableNotificationContent
-        
-        MessagingNotificationService.processNotificationRequest(request, contentHandler: contentHandler)
+
+        guard let content = bestAttemptContent else {
+            contentHandler(request.content)
+            return
+        }
+
+        MessagingNotificationHelper.processNotificationRequest(with: content, contentHandler: contentHandler)
     }
 
     override func serviceExtensionTimeWillExpire() {
+        // Called just before the extension will be terminated by the system.
+        // Deliver the best attempt at modified content, otherwise the original push payload will be used.
         if let contentHandler = contentHandler, let bestAttemptContent = bestAttemptContent {
             contentHandler(bestAttemptContent)
         }

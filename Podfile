@@ -80,9 +80,14 @@ target 'MessagingDemoAppSwiftUI' do
   app_main
 end
 
+target 'NotificationServiceSwiftUI' do
+  pod 'AEPMessagingNotification', :path => './'
+end
+
 target 'UnitTests' do
   lib_main
   test_utils
+  pod 'AEPMessagingNotification', :path => './'
 end
 
 target 'FunctionalTests' do
