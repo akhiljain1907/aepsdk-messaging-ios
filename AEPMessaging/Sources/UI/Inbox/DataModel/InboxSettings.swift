@@ -11,6 +11,7 @@
 */
 
 
+import Foundation
 
 /// Represents the inbox settings containing all configuration properties
 @objc(AEPInboxSettings)
