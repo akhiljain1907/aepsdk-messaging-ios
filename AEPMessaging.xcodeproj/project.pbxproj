@@ -275,6 +275,7 @@
 		928594162522880900B2BE47 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 925DF4482522785700A5DE31 /* LaunchScreen.storyboard */; };
 		9285941C2522899700B2BE47 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 925DF44A2522785700A5DE31 /* Main.storyboard */; };
 		9285941E25228A1500B2BE47 /* ADBMobileConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 925DF44E2522785700A5DE31 /* ADBMobileConfig.json */; };
+		4308341D232D468386DFE797 /* InboxFunctionalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B5D6873D544C4787ED0B54 /* InboxFunctionalTests.swift */; };
 		92863A022637706F000AFA53 /* MessagingFunctionalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92863A012637706F000AFA53 /* MessagingFunctionalTests.swift */; };
 		9296BA862537BFC0002C88F7 /* AEPMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 925DF4A525227C4700A5DE31 /* AEPMessaging.framework */; };
 		92FC587B2636840C005BAE02 /* MessagingPublicAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FC587A2636840C005BAE02 /* MessagingPublicAPITests.swift */; };
@@ -330,6 +331,20 @@
 		B69573C82CD4447F0027E376 /* AEPBundleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69573C72CD444790027E376 /* AEPBundleImageView.swift */; };
 		B6C752782F02692A00F76A54 /* InboxSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C752772F02692A00F76A54 /* InboxSettings.swift */; };
 		B6C7527A2F04B0CB00F76A54 /* ReadStatusManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C752792F04B0CB00F76A54 /* ReadStatusManagerTests.swift */; };
+		0A9D155B84174774B6F6DD11 /* LayoutSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A301B4C9BC74A618FBA92EC /* LayoutSettingsTests.swift */; };
+		1949AACD944344D7BC32A19F /* InboxSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCA947D94604DCCACF943AC /* InboxSettingsTests.swift */; };
+		7FC8752D2FEC4B8490F75863 /* InboxSchemaDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ED549B7D5D4BD2B3766E46 /* InboxSchemaDataTests.swift */; };
+		289698134F074CC2AFEB4C43 /* UnreadIndicatorSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1579C648A4431298A5C9EF /* UnreadIndicatorSettingsTests.swift */; };
+		0896CA676CE24E3BAC9CFC21 /* EmptyStateSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531E38A50A394377B713C9E2 /* EmptyStateSettingsTests.swift */; };
+		CBE050CB53BF402086329301 /* HeadingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC56DFB8D444A25BC205CAD /* HeadingTests.swift */; };
+		610D7694C87747DA9FBA2602 /* InboxErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5CB0ADD5CD4B09B46D6A6D /* InboxErrorTests.swift */; };
+		E09CA04F82054CB4A8AC5D2E /* InboxStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385094F2A3B648BC820CEFA9 /* InboxStateTests.swift */; };
+		21E9FEC362EF41B9A7D57D3F /* InboxEventListeningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB4C861868845FFA51C3132 /* InboxEventListeningTests.swift */; };
+		AB98D09FDC6D47C1B79DC26B /* InboxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC044480E85745A0A6FE4C4F /* InboxUITests.swift */; };
+		66A544B390364C269E47365C /* DefaultHeadingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE401ECA108F4EF3ADB6F667 /* DefaultHeadingViewTests.swift */; };
+		D14F4F38212749F7AAEF4EAF /* DefaultEmptyStateViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF126D339E6043AF9BA26807 /* DefaultEmptyStateViewTests.swift */; };
+		7454DD310E3A41F883456325 /* DefaultLoadingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3783B7834D4427ABDFAEE02 /* DefaultLoadingViewTests.swift */; };
+		A5B04DE7DDE3431AB773F0EB /* DefaultErrorViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E308C1D0514AC89E6435D0 /* DefaultErrorViewTests.swift */; };
 		B6C7527C2F04B10100F76A54 /* ReadStatusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C7527B2F04B10100F76A54 /* ReadStatusManager.swift */; };
 		B6D02CF92F67ECA300D65C16 /* InboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D02CF82F67ECA300D65C16 /* InboxView.swift */; };
 		B6D035E22D2F23E900031170 /* AppStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D035E12D2F23E900031170 /* AppStateManager.swift */; };
@@ -912,6 +927,7 @@
 		925DF4502522785700A5DE31 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		925DF4A525227C4700A5DE31 /* AEPMessaging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AEPMessaging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		928639FB263757A7000AFA53 /* Dictionary+Flatten.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Flatten.swift"; sourceTree = "<group>"; };
+		66B5D6873D544C4787ED0B54 /* InboxFunctionalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxFunctionalTests.swift; sourceTree = "<group>"; };
 		92863A012637706F000AFA53 /* MessagingFunctionalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingFunctionalTests.swift; sourceTree = "<group>"; };
 		9296BA812537BFC0002C88F7 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		92BCEC9C2538FC0E0068F8B8 /* AEPEdge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AEPEdge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -972,6 +988,20 @@
 		B69573C72CD444790027E376 /* AEPBundleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AEPBundleImageView.swift; sourceTree = "<group>"; };
 		B6C752772F02692A00F76A54 /* InboxSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxSettings.swift; sourceTree = "<group>"; };
 		B6C752792F04B0CB00F76A54 /* ReadStatusManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadStatusManagerTests.swift; sourceTree = "<group>"; };
+		6A301B4C9BC74A618FBA92EC /* LayoutSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutSettingsTests.swift; sourceTree = "<group>"; };
+		2BCA947D94604DCCACF943AC /* InboxSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxSettingsTests.swift; sourceTree = "<group>"; };
+		65ED549B7D5D4BD2B3766E46 /* InboxSchemaDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxSchemaDataTests.swift; sourceTree = "<group>"; };
+		DB1579C648A4431298A5C9EF /* UnreadIndicatorSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadIndicatorSettingsTests.swift; sourceTree = "<group>"; };
+		531E38A50A394377B713C9E2 /* EmptyStateSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateSettingsTests.swift; sourceTree = "<group>"; };
+		DBC56DFB8D444A25BC205CAD /* HeadingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingTests.swift; sourceTree = "<group>"; };
+		3F5CB0ADD5CD4B09B46D6A6D /* InboxErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxErrorTests.swift; sourceTree = "<group>"; };
+		385094F2A3B648BC820CEFA9 /* InboxStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxStateTests.swift; sourceTree = "<group>"; };
+		0EB4C861868845FFA51C3132 /* InboxEventListeningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxEventListeningTests.swift; sourceTree = "<group>"; };
+		BC044480E85745A0A6FE4C4F /* InboxUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxUITests.swift; sourceTree = "<group>"; };
+		BE401ECA108F4EF3ADB6F667 /* DefaultHeadingViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultHeadingViewTests.swift; sourceTree = "<group>"; };
+		BF126D339E6043AF9BA26807 /* DefaultEmptyStateViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultEmptyStateViewTests.swift; sourceTree = "<group>"; };
+		F3783B7834D4427ABDFAEE02 /* DefaultLoadingViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoadingViewTests.swift; sourceTree = "<group>"; };
+		62E308C1D0514AC89E6435D0 /* DefaultErrorViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultErrorViewTests.swift; sourceTree = "<group>"; };
 		B6C7527B2F04B10100F76A54 /* ReadStatusManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadStatusManager.swift; sourceTree = "<group>"; };
 		B6D02CF82F67ECA300D65C16 /* InboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxView.swift; sourceTree = "<group>"; };
 		B6D035E12D2F23E900031170 /* AppStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateManager.swift; sourceTree = "<group>"; };
@@ -1668,6 +1698,7 @@
 			children = (
 				2469A6032759999E00E56457 /* FunctionalTestApp */,
 				24EE301D28FF61F0005E417C /* InAppMessagingEventTests.swift */,
+				66B5D6873D544C4787ED0B54 /* InboxFunctionalTests.swift */,
 				92863A012637706F000AFA53 /* MessagingFunctionalTests.swift */,
 				B631AE152A61336800E8B82E /* MessagingNotificationTrackingTests.swift */,
 				92FC587A2636840C005BAE02 /* MessagingPublicAPITests.swift */,
@@ -1975,6 +2006,20 @@
 			isa = PBXGroup;
 			children = (
 				B6C752792F04B0CB00F76A54 /* ReadStatusManagerTests.swift */,
+				6A301B4C9BC74A618FBA92EC /* LayoutSettingsTests.swift */,
+				2BCA947D94604DCCACF943AC /* InboxSettingsTests.swift */,
+				65ED549B7D5D4BD2B3766E46 /* InboxSchemaDataTests.swift */,
+				DB1579C648A4431298A5C9EF /* UnreadIndicatorSettingsTests.swift */,
+				531E38A50A394377B713C9E2 /* EmptyStateSettingsTests.swift */,
+				DBC56DFB8D444A25BC205CAD /* HeadingTests.swift */,
+				3F5CB0ADD5CD4B09B46D6A6D /* InboxErrorTests.swift */,
+				385094F2A3B648BC820CEFA9 /* InboxStateTests.swift */,
+				0EB4C861868845FFA51C3132 /* InboxEventListeningTests.swift */,
+				BC044480E85745A0A6FE4C4F /* InboxUITests.swift */,
+				BE401ECA108F4EF3ADB6F667 /* DefaultHeadingViewTests.swift */,
+				BF126D339E6043AF9BA26807 /* DefaultEmptyStateViewTests.swift */,
+				F3783B7834D4427ABDFAEE02 /* DefaultLoadingViewTests.swift */,
+				62E308C1D0514AC89E6435D0 /* DefaultErrorViewTests.swift */,
 				B6F7CBEC2CC2EAF500C35C64 /* AEPButtonTests.swift */,
 				B6F7CBED2CC2EAF500C35C64 /* AEPDismissButtonTests.swift */,
 				B6F7CBEE2CC2EAF500C35C64 /* AEPImageTests.swift */,
@@ -3397,6 +3442,20 @@
 				24CA4BDB2B61971000D16369 /* PropositionTests.swift in Sources */,
 				24CA4BDF2B61974300D16369 /* PropositionInteractionTests.swift in Sources */,
 				B6C7527A2F04B0CB00F76A54 /* ReadStatusManagerTests.swift in Sources */,
+				0A9D155B84174774B6F6DD11 /* LayoutSettingsTests.swift in Sources */,
+				1949AACD944344D7BC32A19F /* InboxSettingsTests.swift in Sources */,
+				7FC8752D2FEC4B8490F75863 /* InboxSchemaDataTests.swift in Sources */,
+				289698134F074CC2AFEB4C43 /* UnreadIndicatorSettingsTests.swift in Sources */,
+				0896CA676CE24E3BAC9CFC21 /* EmptyStateSettingsTests.swift in Sources */,
+				CBE050CB53BF402086329301 /* HeadingTests.swift in Sources */,
+				610D7694C87747DA9FBA2602 /* InboxErrorTests.swift in Sources */,
+				E09CA04F82054CB4A8AC5D2E /* InboxStateTests.swift in Sources */,
+				21E9FEC362EF41B9A7D57D3F /* InboxEventListeningTests.swift in Sources */,
+				AB98D09FDC6D47C1B79DC26B /* InboxUITests.swift in Sources */,
+				66A544B390364C269E47365C /* DefaultHeadingViewTests.swift in Sources */,
+				D14F4F38212749F7AAEF4EAF /* DefaultEmptyStateViewTests.swift in Sources */,
+				7454DD310E3A41F883456325 /* DefaultLoadingViewTests.swift in Sources */,
+				A5B04DE7DDE3431AB773F0EB /* DefaultErrorViewTests.swift in Sources */,
 				B63467672EF9442C00DBF753 /* Messaging+InboxPropositionsTests.swift in Sources */,
 				24CA4BC92B617A3F00D16369 /* JsonContentSchemaDataTests.swift in Sources */,
 				24CA4BDD2B61972500D16369 /* PropositionItemTests.swift in Sources */,
@@ -3460,6 +3519,7 @@
 				2469A5FB2759401900E56457 /* ConfigurationLoader.swift in Sources */,
 				92863A022637706F000AFA53 /* MessagingFunctionalTests.swift in Sources */,
 				B631AE162A61336800E8B82E /* MessagingNotificationTrackingTests.swift in Sources */,
+				4308341D232D468386DFE797 /* InboxFunctionalTests.swift in Sources */,
 				F03DEEFA3F66D2D96736F90A /* ReevaluationFunctionalTests.swift in Sources */,
 				B6F795E22DD30238004478B4 /* LiveActivityTests.swift in Sources */,
 			);
@@ -3725,7 +3785,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.adobe.Messaging.TestApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.adobe.MessagingDemoAppSwiftUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -3762,7 +3822,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.adobe.Messaging.TestApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.adobe.MessagingDemoAppSwiftUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -4496,7 +4556,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.adobe.Messaging.TestApp.WidgetMessagingDemoAppSwiftUI;
+				PRODUCT_BUNDLE_IDENTIFIER = com.adobe.MessagingDemoAppSwiftUI.WidgetMessagingDemoAppSwiftUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
@@ -4530,7 +4590,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.adobe.Messaging.TestApp.WidgetMessagingDemoAppSwiftUI;
+				PRODUCT_BUNDLE_IDENTIFIER = com.adobe.MessagingDemoAppSwiftUI.WidgetMessagingDemoAppSwiftUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
