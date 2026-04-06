@@ -107,6 +107,13 @@ public class Messaging: NSObject, Extension {
         set { queue.async { self._qualifiedContentCardsBySurface = newValue } }
     }
 
+    /// holds inbox propositions (container-item) for each surface
+    private var _inboxPropositionsBySurface: [Surface: [Proposition]] = [:]
+    var inboxPropositionsBySurface: [Surface: [Proposition]] {
+        get { queue.sync { self._inboxPropositionsBySurface } }
+        set { queue.async { self._inboxPropositionsBySurface = newValue } }
+    }
+
     /// Messaging state manager (push identifier + live activity state)
     private var stateManager = MessagingStateManager()
 
@@ -117,7 +124,8 @@ public class Messaging: NSObject, Extension {
     static let supportedSchemas = [
         MessagingConstants.PersonalizationSchemas.HTML_CONTENT,
         MessagingConstants.PersonalizationSchemas.JSON_CONTENT,
-        MessagingConstants.PersonalizationSchemas.RULESET_ITEM
+        MessagingConstants.PersonalizationSchemas.RULESET_ITEM,
+        MessagingConstants.PersonalizationSchemas.INBOX
     ]
 
     // MARK: - Extension protocol methods
@@ -898,6 +906,7 @@ public class Messaging: NSObject, Extension {
         // persistence we will be removing empty surfaces and making sure unrequested surfaces
         // continue to have their rules active
         updatePropositions(parsedPropositions.propositionsToCache, removing: surfacesToRemove)
+        updateInboxPropositions(parsedPropositions.inboxPropositionsToCache, removing: surfacesToRemove)
         updatePropositionInfo(parsedPropositions.propositionInfoToCache, removing: surfacesToRemove)
         cache.updatePropositions(parsedPropositions.propositionsToPersist, removing: surfacesToRemove)
 
@@ -986,9 +995,15 @@ public class Messaging: NSObject, Extension {
         // get requested propositions (cbe) from cache
         let requestedPropositions = retrieveCachedPropositions(for: requestedSurfaces)
 
-        // merge the two maps
+        // get requested inbox propositions from cache
+        let requestedInboxPropositions = inboxPropositionsBySurface.filter { surfaces.contains($0.key) }
+
+        // merge the three maps
         var mergedPropositions = requestedContentCards
         for (surface, propositions) in requestedPropositions {
+            mergedPropositions.addArray(propositions, forKey: surface)
+        }
+        for (surface, propositions) in requestedInboxPropositions {
             mergedPropositions.addArray(propositions, forKey: surface)
         }
 
