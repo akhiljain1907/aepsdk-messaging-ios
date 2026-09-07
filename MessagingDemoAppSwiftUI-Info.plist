@@ -2,6 +2,27 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>INAlternativeAppNames</key>
+	<array>
+		<dict>
+			<key>INAlternativeAppName</key>
+			<string>Messaging Demo</string>
+			<key>INAlternativeAppNamePronunciationHint</key>
+			<string>Messaging Demo</string>
+		</dict>
+		<dict>
+			<key>INAlternativeAppName</key>
+			<string>AEP Messaging</string>
+			<key>INAlternativeAppNamePronunciationHint</key>
+			<string>A E P Messaging</string>
+		</dict>
+		<dict>
+			<key>INAlternativeAppName</key>
+			<string>Adobe Messaging</string>
+			<key>INAlternativeAppNamePronunciationHint</key>
+			<string>Adobe Messaging</string>
+		</dict>
+	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

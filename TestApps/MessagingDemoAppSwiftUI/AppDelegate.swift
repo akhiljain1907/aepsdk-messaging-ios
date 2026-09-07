@@ -24,6 +24,11 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         MobileCore.setLogLevel(.trace)
 
+        // Configure the Messaging App Intents (Siri / Apple Intelligence) surfaces so the
+        // intents know which surface to query even on a cold launch.
+        MessagingAppIntents.contentCardSurfacePath = Constants.SurfaceName.CONTENT_CARD
+        MessagingAppIntents.codeBasedSurfacePath = Constants.SurfaceName.CBE_JSON
+
         let extensions = [
             Identity.self,
             Lifecycle.self,
@@ -37,7 +42,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         
         MobileCore.registerExtensions(extensions) {
             MobileCore.configureWith(appId: Constants.APPID)
-            
+
             if Constants.isStage {
                 MobileCore.updateConfigurationWith(configDict: ["edge.environment": "int"])
             }

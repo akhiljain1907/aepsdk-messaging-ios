@@ -245,6 +245,7 @@
 		4CC464D42E83B35D00217A78 /* TestMapBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC464CF2E83B35D00217A78 /* TestMapBase.swift */; };
 		4CC464D52E83B35D00217A78 /* TestElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC464CE2E83B35D00217A78 /* TestElement.swift */; };
 		4CC464D62E83B35D00217A78 /* CountingDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC464CD2E83B35D00217A78 /* CountingDataStore.swift */; };
+		4CF7D034220564D61CC9F22F /* MessagingContentCardsSnippetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1898B86E6ACC946617CBA52 /* MessagingContentCardsSnippetView.swift */; };
 		610D7694C87747DA9FBA2602 /* InboxErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5CB0ADD5CD4B09B46D6A6D /* InboxErrorTests.swift */; };
 		66A544B390364C269E47365C /* DefaultHeadingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE401ECA108F4EF3ADB6F667 /* DefaultHeadingViewTests.swift */; };
 		6C2343E8785E6B47C8D961F7 /* Pods_FunctionalTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D55E83254139642A1CAA76E /* Pods_FunctionalTests.framework */; };
@@ -298,12 +299,16 @@
 		92FC587D2636840C005BAE02 /* AEPMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 925DF4A525227C4700A5DE31 /* AEPMessaging.framework */; };
 		92FC594526372E34005BAE02 /* MockNotificationResponseCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FC594426372E34005BAE02 /* MockNotificationResponseCoder.swift */; };
 		92FC594626372E34005BAE02 /* MockNotificationResponseCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FC594426372E34005BAE02 /* MockNotificationResponseCoder.swift */; };
+		A144352830670C8A87BFAC0A /* GetMessagingContentCardsIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172DAF18287F5F680F2F80D8 /* GetMessagingContentCardsIntent.swift */; };
 		A583FC9173E905F9E5DF6D0F /* Pods_UnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B86A865B6338E5FAFD760F08 /* Pods_UnitTests.framework */; };
 		A5B04DE7DDE3431AB773F0EB /* DefaultErrorViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E308C1D0514AC89E6435D0 /* DefaultErrorViewTests.swift */; };
 		AA000006AAAA0001000AA001 /* AEPMessagingNotification.h in Headers */ = {isa = PBXBuildFile; fileRef = AA000002AAAA0001000AA001 /* AEPMessagingNotification.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA000007AAAA0001000AA001 /* MessagingNotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000003AAAA0001000AA001 /* MessagingNotificationHelper.swift */; };
 		AA000008AAAA0001000AA001 /* MessagingLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000004AAAA0001000AA001 /* MessagingLog.swift */; };
 		AB98D09FDC6D47C1B79DC26B /* InboxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC044480E85745A0A6FE4C4F /* InboxUITests.swift */; };
+		B14E1B3440E89634B024FDA7 /* GetMessagingCodeBasedOffersIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153D2F8E29C82F100B69A5DF /* GetMessagingCodeBasedOffersIntent.swift */; };
+		B1D01570029839F38A29765D /* MessagingAppIntentsPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA9E3EF7E41611FD02761EE /* MessagingAppIntentsPackage.swift */; };
+		B39FC58E4B4AB7C79A58DC2D /* MessagingCodeBasedSnippetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CED78EE715A1E557F6BCDC7 /* MessagingCodeBasedSnippetView.swift */; };
 		B42C4B4F21284FB6EDC07676 /* Pods_IntegrationTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7872C9FF7BE2CF1D18017C01 /* Pods_IntegrationTests.framework */; };
 		B60EE0C22F0E40C30040189F /* AEPUnreadIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60EE0C12F0E40C30040189F /* AEPUnreadIcon.swift */; };
 		B6165DA629A67ADA0031B84D /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6165DA529A67ADA0031B84D /* NotificationService.swift */; };
@@ -454,10 +459,13 @@
 		D70A920A4E9FB7E4D9071C40 /* Pods_AEPMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B411B1F9538EB09000C67E /* Pods_AEPMessaging.framework */; };
 		D8F12C4D9192ED50E10E7DC8 /* MessagingRuleEngineInterceptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E8C1E12F01D07AFBDF4F39 /* MessagingRuleEngineInterceptorTests.swift */; };
 		D8F12C4D9192ED50E10E7DC9 /* RefreshInAppHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E8C1E12F01D07AFBDF4F3A /* RefreshInAppHandlerTests.swift */; };
+		DC5EC0FD399ED8A482A10A4B /* MessagingOfferShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395737760E134A5F62B88CC1 /* MessagingOfferShortcuts.swift */; };
 		DCA9F90C57FBD4B61DAEC1C7 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6165DA529A67ADA0031B84D /* NotificationService.swift */; };
 		E09CA04F82054CB4A8AC5D2E /* InboxStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385094F2A3B648BC820CEFA9 /* InboxStateTests.swift */; };
 		E1E1C4D19DDFA98963D58BB5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E78D9F64A7EAE46F3B8CF3 /* Foundation.framework */; };
 		F03DEEFA3F66D2D96736F90A /* ReevaluationFunctionalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A8A4FA7DBAD4D894D4E42 /* ReevaluationFunctionalTests.swift */; };
+		F2B0A51A2EC85467EB3F309D /* MessagingAppIntentsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68424E21133C132DDD4066DF /* MessagingAppIntentsConfiguration.swift */; };
+		F85956801CE49F4AE1A08D5F /* CodeBasedOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D20300136C842DAE3BF947 /* CodeBasedOffer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -729,6 +737,8 @@
 		0F630F3E2F0ED2DE0080688A /* LiveActivityBatchTokenCollector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityBatchTokenCollector.swift; sourceTree = "<group>"; };
 		0F7A26ACD18052FCC10BA070 /* Pods-NotificationService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationService.release.xcconfig"; path = "Target Support Files/Pods-NotificationService/Pods-NotificationService.release.xcconfig"; sourceTree = "<group>"; };
 		1331B50C344AD02FE0C9E2BF /* Pods_FunctionalTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FunctionalTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		153D2F8E29C82F100B69A5DF /* GetMessagingCodeBasedOffersIntent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GetMessagingCodeBasedOffersIntent.swift; path = ../../../AEPMessagingAppIntents/Sources/GetMessagingCodeBasedOffersIntent.swift; sourceTree = "<group>"; };
+		172DAF18287F5F680F2F80D8 /* GetMessagingContentCardsIntent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GetMessagingContentCardsIntent.swift; path = ../../../AEPMessagingAppIntents/Sources/GetMessagingContentCardsIntent.swift; sourceTree = "<group>"; };
 		17C712A4BE9744C2B77101B3 /* AEPMessagingNotificationHelperTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AEPMessagingNotificationHelperTests.swift; sourceTree = "<group>"; };
 		1F4E259E7D8AA8C9CC161945 /* Pods-UnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.debug.xcconfig"; path = "Target Support Files/Pods-UnitTests/Pods-UnitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		20F6C93A259B55959EF4EA0C /* Pods-E2EFunctionalTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-E2EFunctionalTests.release.xcconfig"; path = "Target Support Files/Pods-E2EFunctionalTests/Pods-E2EFunctionalTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -873,6 +883,8 @@
 		2BCA947D94604DCCACF943AC /* InboxSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxSettingsTests.swift; sourceTree = "<group>"; };
 		36D3F6949A279969C6766FF5 /* Pods_E2EFunctionalTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_E2EFunctionalTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		385094F2A3B648BC820CEFA9 /* InboxStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxStateTests.swift; sourceTree = "<group>"; };
+		395737760E134A5F62B88CC1 /* MessagingOfferShortcuts.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MessagingOfferShortcuts.swift; sourceTree = "<group>"; };
+		3CED78EE715A1E557F6BCDC7 /* MessagingCodeBasedSnippetView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MessagingCodeBasedSnippetView.swift; path = ../../../AEPMessagingAppIntents/Sources/MessagingCodeBasedSnippetView.swift; sourceTree = "<group>"; };
 		3D55E83254139642A1CAA76E /* Pods_FunctionalTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FunctionalTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F5CB0ADD5CD4B09B46D6A6D /* InboxErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxErrorTests.swift; sourceTree = "<group>"; };
 		43204BBDCB8D5720A0D56E52 /* Pods-IntegrationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntegrationTests.release.xcconfig"; path = "Target Support Files/Pods-IntegrationTests/Pods-IntegrationTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -912,6 +924,7 @@
 		6346827F4BC239DF7DDFD044 /* Pods-MessagingDemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessagingDemoApp.debug.xcconfig"; path = "Target Support Files/Pods-MessagingDemoApp/Pods-MessagingDemoApp.debug.xcconfig"; sourceTree = "<group>"; };
 		65ED549B7D5D4BD2B3766E46 /* InboxSchemaDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxSchemaDataTests.swift; sourceTree = "<group>"; };
 		66B5D6873D544C4787ED0B54 /* InboxFunctionalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxFunctionalTests.swift; sourceTree = "<group>"; };
+		68424E21133C132DDD4066DF /* MessagingAppIntentsConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MessagingAppIntentsConfiguration.swift; path = ../../../AEPMessagingAppIntents/Sources/MessagingAppIntentsConfiguration.swift; sourceTree = "<group>"; };
 		6912F64FC8C8BFAF5ACD8EF0 /* Pods-UnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.release.xcconfig"; path = "Target Support Files/Pods-UnitTests/Pods-UnitTests.release.xcconfig"; sourceTree = "<group>"; };
 		6A301B4C9BC74A618FBA92EC /* LayoutSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutSettingsTests.swift; sourceTree = "<group>"; };
 		6D215989BF9365E7165510B0 /* Pods-NotificationService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationService.debug.xcconfig"; path = "Target Support Files/Pods-NotificationService/Pods-NotificationService.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1135,6 +1148,7 @@
 		BF90DF53585960AE051234A9 /* Pods-IntegrationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntegrationTests.debug.xcconfig"; path = "Target Support Files/Pods-IntegrationTests/Pods-IntegrationTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C7465CB5D942426740F36F97 /* Pods-MessagingDemoAppSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessagingDemoAppSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-MessagingDemoAppSwiftUI/Pods-MessagingDemoAppSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
 		CCUIPUBLIC001TEST00000002 /* Messaging+UIPublicApiTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Messaging+UIPublicApiTest.swift"; sourceTree = "<group>"; };
+		D1898B86E6ACC946617CBA52 /* MessagingContentCardsSnippetView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MessagingContentCardsSnippetView.swift; path = ../../../AEPMessagingAppIntents/Sources/MessagingContentCardsSnippetView.swift; sourceTree = "<group>"; };
 		D4E3F2A15C6B708901234501 /* ContentCardCacheFunctionalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCardCacheFunctionalTests.swift; sourceTree = "<group>"; };
 		D5773DB866CADAB59B3043AE /* Pods-FunctionalTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FunctionalTestApp.release.xcconfig"; path = "Target Support Files/Pods-FunctionalTestApp/Pods-FunctionalTestApp.release.xcconfig"; sourceTree = "<group>"; };
 		D63FC3AB2E00DAB800037B50 /* String+DataConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+DataConversion.swift"; sourceTree = "<group>"; };
@@ -1148,6 +1162,8 @@
 		E7A2B17D34C47FB6CA55B1E9 /* Pods-MessagingDemoAppObjC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessagingDemoAppObjC.debug.xcconfig"; path = "Target Support Files/Pods-MessagingDemoAppObjC/Pods-MessagingDemoAppObjC.debug.xcconfig"; sourceTree = "<group>"; };
 		EF179C2F973B478E3EA6F0EB /* Pods-E2EFunctionalTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-E2EFunctionalTestApp.release.xcconfig"; path = "Target Support Files/Pods-E2EFunctionalTestApp/Pods-E2EFunctionalTestApp.release.xcconfig"; sourceTree = "<group>"; };
 		F3783B7834D4427ABDFAEE02 /* DefaultLoadingViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoadingViewTests.swift; sourceTree = "<group>"; };
+		F7D20300136C842DAE3BF947 /* CodeBasedOffer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CodeBasedOffer.swift; path = ../../../AEPMessagingAppIntents/Sources/CodeBasedOffer.swift; sourceTree = "<group>"; };
+		FCA9E3EF7E41611FD02761EE /* MessagingAppIntentsPackage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MessagingAppIntentsPackage.swift; path = ../../../AEPMessagingAppIntents/Sources/MessagingAppIntentsPackage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1304,6 +1320,7 @@
 				09305F0B2AC2EAFF00406607 /* MessagingDemoAppSwiftUI-Info.plist */,
 				091881EA2A16BAE400615481 /* Assets.xcassets */,
 				0969D6D02A7AFB3800A00BF7 /* Preview Content */,
+				9F5AFB6F2AA454B6EF4A95ED /* SiriIntents */,
 			);
 			name = MessagingDemoAppSwiftUI;
 			path = TestApps/MessagingDemoAppSwiftUI;
@@ -1793,6 +1810,22 @@
 				9C2A8A4FA7DBAD4D894D4E42 /* ReevaluationFunctionalTests.swift */,
 			);
 			path = FunctionalTests;
+			sourceTree = "<group>";
+		};
+		9F5AFB6F2AA454B6EF4A95ED /* SiriIntents */ = {
+			isa = PBXGroup;
+			children = (
+				68424E21133C132DDD4066DF /* MessagingAppIntentsConfiguration.swift */,
+				D1898B86E6ACC946617CBA52 /* MessagingContentCardsSnippetView.swift */,
+				172DAF18287F5F680F2F80D8 /* GetMessagingContentCardsIntent.swift */,
+				F7D20300136C842DAE3BF947 /* CodeBasedOffer.swift */,
+				3CED78EE715A1E557F6BCDC7 /* MessagingCodeBasedSnippetView.swift */,
+				153D2F8E29C82F100B69A5DF /* GetMessagingCodeBasedOffersIntent.swift */,
+				FCA9E3EF7E41611FD02761EE /* MessagingAppIntentsPackage.swift */,
+				395737760E134A5F62B88CC1 /* MessagingOfferShortcuts.swift */,
+			);
+			name = SiriIntents;
+			path = SiriIntents;
 			sourceTree = "<group>";
 		};
 		AA000011AAAA0001000AA001 /* AEPMessagingNotification */ = {
@@ -3381,6 +3414,14 @@
 				B61BD8E62DA466F9007FE12E /* AirplaneTrackingAttributes.swift in Sources */,
 				0969D6362A760AF900A00BF7 /* CustomHtmlView.swift in Sources */,
 				091881E72A16BAE300615481 /* MessagingDemoAppSwiftUIApp.swift in Sources */,
+				F2B0A51A2EC85467EB3F309D /* MessagingAppIntentsConfiguration.swift in Sources */,
+				4CF7D034220564D61CC9F22F /* MessagingContentCardsSnippetView.swift in Sources */,
+				A144352830670C8A87BFAC0A /* GetMessagingContentCardsIntent.swift in Sources */,
+				F85956801CE49F4AE1A08D5F /* CodeBasedOffer.swift in Sources */,
+				B39FC58E4B4AB7C79A58DC2D /* MessagingCodeBasedSnippetView.swift in Sources */,
+				B14E1B3440E89634B024FDA7 /* GetMessagingCodeBasedOffersIntent.swift in Sources */,
+				B1D01570029839F38A29765D /* MessagingAppIntentsPackage.swift in Sources */,
+				DC5EC0FD399ED8A482A10A4B /* MessagingOfferShortcuts.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5052,91 +5093,6 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = com.adobe.aep.messagingliveactivity;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		AA00000FAAAA0001000AA001 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AEPMessagingNotification/Sources/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.16.0;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = com.adobe.aep.messagingnotification;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		AA000010AAAA0001000AA001 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AEPMessagingNotification/Sources/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.16.0;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = com.adobe.aep.messagingnotification;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

@@ -21,7 +21,10 @@ let package = Package(
     products: [
         .library(name: "AEPMessaging", targets: ["AEPMessaging"]),
         .library(name: "AEPMessagingLiveActivity", targets: ["AEPMessagingLiveActivity"]),
-        .library(name: "AEPMessagingNotification", targets: ["AEPMessagingNotification"])
+        .library(name: "AEPMessagingNotification", targets: ["AEPMessagingNotification"]),
+        // Opt-in App Intents support: exposes content cards and code-based experiences to
+        // Siri, Spotlight, Shortcuts and Apple Intelligence. Depends only on AEPMessaging + AppIntents.
+        .library(name: "AEPMessagingAppIntents", targets: ["AEPMessagingAppIntents"])
     ],
     dependencies: [
         .package(url: "https://github.com/adobe/aepsdk-core-ios.git", .upToNextMajor(from: "5.11.0")),
@@ -47,6 +50,11 @@ let package = Package(
         .target(
             name: "AEPMessagingNotification",
             path: "AEPMessagingNotification/Sources/"
+        ),
+        .target(
+            name: "AEPMessagingAppIntents",
+            dependencies: ["AEPMessaging"],
+            path: "AEPMessagingAppIntents/Sources"
         )
     ]
 )
