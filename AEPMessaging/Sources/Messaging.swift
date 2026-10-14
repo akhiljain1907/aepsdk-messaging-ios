@@ -299,6 +299,10 @@ public class Messaging: NSObject, Extension {
                          source: EventSource.requestContent,
                          listener: handleProcessEvent)
 
+        registerListener(type: EventType.messaging,
+                         source: EventSource.responseContent,
+                         listener: handleDeviceAttributesConfirmed)
+
         // register wildcard listener for messaging rules engine
         registerListener(type: EventType.wildcard,
                          source: EventSource.wildcard,
@@ -360,6 +364,7 @@ public class Messaging: NSObject, Extension {
     }
 
     public func readyForEvent(_ event: Event) -> Bool {
+        if event.isDeviceAttributesConfirmedEvent { return true }
         guard let configurationSharedState = getSharedState(extensionName: MessagingConstants.SharedState.Configuration.NAME, event: event),
               configurationSharedState.status == .set
         else {
@@ -390,6 +395,59 @@ public class Messaging: NSObject, Extension {
     }
 
     // MARK: - Event Handers
+
+    private func handleDeviceAttributesConfirmed(_ event: Event) {
+        guard event.isDeviceAttributesConfirmedEvent else { return }
+        guard let tokens = event.data?["tokens"] as? [String: Any] else {
+            Log.warning(label: MessagingConstants.LOG_TAG, "Confirmed device attributes contain no valid tokens dictionary.")
+            return
+        }
+        var updated = false
+        if let push = tokens["pushNotification"] as? String {
+            stateManager.pushIdentifier = push
+            lastPushTokenSyncTimestamp = event.timestamp
+            updated = true
+        } else if tokens["pushNotification"] != nil {
+            Log.warning(label: MessagingConstants.LOG_TAG, "Ignoring confirmed push token: expected a string.")
+        }
+        if let starts = tokens["liveActivityStart"] as? [[String: Any]] {
+            for entry in starts {
+                guard let type = entry["attributeType"] as? String, !type.isEmpty,
+                      let token = entry["value"] as? String else {
+                    Log.warning(label: MessagingConstants.LOG_TAG, "Ignoring confirmed push-to-start entry: attributeType and value are required.")
+                    continue
+                }
+                let existing = stateManager.pushToStartTokenStore.value(for: type)
+                stateManager.pushToStartTokenStore.set(
+                    .init(firstIssued: existing?.firstIssued ?? event.timestamp, token: token), id: type)
+                updated = true
+            }
+        } else if tokens["liveActivityStart"] != nil {
+            Log.warning(label: MessagingConstants.LOG_TAG, "Ignoring confirmed push-to-start tokens: expected an array of entries.")
+        }
+        if let updates = tokens["liveActivityUpdate"] as? [[String: Any]] {
+            for entry in updates {
+                guard let id = entry["liveActivityID"] as? String, !id.isEmpty,
+                      let token = entry["token"] as? String else {
+                    Log.warning(label: MessagingConstants.LOG_TAG, "Ignoring confirmed update entry: liveActivityID and token are required.")
+                    continue
+                }
+                let existing = stateManager.updateTokenStore.value(for: id)
+                guard let type = existing?.attributeType ?? (entry["attributeType"] as? String), !type.isEmpty else {
+                    Log.warning(label: MessagingConstants.LOG_TAG, "Cannot store confirmed update token for '\(id)': attributeType is required for an unknown activity.")
+                    continue
+                }
+                stateManager.updateTokenStore.set(
+                    .init(attributeType: type, firstIssued: existing?.firstIssued ?? event.timestamp, token: token), id: id)
+                updated = true
+            }
+        } else if tokens["liveActivityUpdate"] != nil {
+            Log.warning(label: MessagingConstants.LOG_TAG, "Ignoring confirmed update tokens: expected an array of entries.")
+        }
+        if updated {
+            runtime.createSharedState(data: stateManager.buildMessagingSharedState(), event: event)
+        }
+    }
 
     /// Processes the events in the event queue in the order they were received.
     ///
@@ -477,6 +535,7 @@ public class Messaging: NSObject, Extension {
                 return
             }
 
+            let previousToken = stateManager.updateTokenStore.value(for: liveActivityID)?.token
             // If the Live Activity ID, attribute type, and update token are valid, update the shared state.
             if let attributeType = event.liveActivityAttributeType {
                 let updateToken = LiveActivity.UpdateToken(attributeType: attributeType, firstIssued: event.timestamp, token: token)
@@ -486,6 +545,12 @@ public class Messaging: NSObject, Extension {
                 Log.warning(label: MessagingConstants.LOG_TAG, "Unable to create a shared state for Live Activity update event (\(event.id.uuidString)) because a valid Live Activity attribute type could not be found in the event.")
             }
 
+            let config = getSharedState(extensionName: MessagingConstants.SharedState.Configuration.NAME, event: event)?.value
+            if config?[MessagingConstants.SharedState.Configuration.OPTIMIZE_PUSH_SYNC] as? Bool != false,
+               previousToken == token {
+                Log.debug(label: MessagingConstants.LOG_TAG, "Live Activity update token is unchanged. Skipping Edge sync.")
+                return
+            }
             sendLiveActivityUpdateToken(liveActivityID: liveActivityID, token: token, event: event)
             return
         }
